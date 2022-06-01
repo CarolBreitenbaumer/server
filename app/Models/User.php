@@ -63,10 +63,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
+    //geben eindeutigen Key zurück
     public function getJWTIdentifier(){
         return $this->getKey();
     }
 
+    //um Daten mitzugeben
     public function getJWTCustomClaims()
     {
         return ['user'=>['id'=>$this->id, 'isAdmin'=>$this->isAdmin]];

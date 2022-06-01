@@ -24,4 +24,14 @@ class UserController extends BaseController
 
     }
 
+    public function getInfoforUser(){
+        //aktuelle BenutzerID
+        $userId = Auth::user()->id;
+        //bekommen Datensatz wo benutzer_id mit user_id übereinstimmt
+        $student = Student::with('appointments')->where ('id',$userId)->first();
+
+        return $student != null ? response()->json($student,200): response()->json(false,404);
+
+    }
+
 }

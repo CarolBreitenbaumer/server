@@ -11,6 +11,8 @@ class CreateStudentsTable extends Migration
      *
      * @return void
      */
+
+    //führe Migration aus
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
@@ -27,6 +29,8 @@ class CreateStudentsTable extends Migration
      *
      * @return void
      */
+
+    //für Rollback
     public function down()
     {
         Schema::dropIfExists('students');

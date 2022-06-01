@@ -33,21 +33,15 @@ class MessageController extends Controller
     }
 
     public function getMessagesForTutor(string $id) {
-        $id = Tutor::where('users_id', $id)->first()->value('id');
+        $id = Tutor::where('users_id', $id)->value('id');
         $message = Message::with(['subject'])->where('readed', false)->whereHas('subject',
             function($query) use ($id) {
-                $query->where('id', $id);
+                $query->where('tutor_id', $id);
         })->get();
         return $message;
     }
 
-    public function getMessagesForStudent(string $id){
-        $id = Student::where('users_id', $id)->first()->value('id');
-        $messages = Message::where('student_id', $id)->get();
-        return $messages;
-    }
-
-    public function setMessageReaded($id){
+    public function readMessage($id){
         $message = Message::where('id',$id)->first();
         $message->readed = true;
         $message->save();

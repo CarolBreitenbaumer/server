@@ -22,7 +22,6 @@ class UserTableSeeder extends Seeder
         $user1->isAdmin = true;
         $user1->save();
 
-
         $user2 = new User();
         $user2->name ="student";
         $user2->email ="student@gmail.com";

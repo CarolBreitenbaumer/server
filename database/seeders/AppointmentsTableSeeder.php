@@ -56,7 +56,38 @@ class AppointmentsTableSeeder extends Seeder
         $appointment3->save();
 
         $appointment4 = new Appointment();
-        $appointment4->date = date("2022-05-30");
+        $appointment4->date = date("2022-08-01");
+        $appointment4->time = '17:00';
+        $appointment4->duration = '1:00:00';
+        $appointment4->attend = false;
+        $appointment4->place = 'online, Zoom';
+        $student = Student::all()->first();
+        $appointment4->student()->associate($student);
+        $appointment4->subject()->associate($subject);
+        $appointment4->save();
+
+        $appointment5 = new Appointment();
+        $appointment5->date = date("2022-07-30");
+        $appointment5->time = '20:00';
+        $appointment5->duration = '1:00:00';
+        $appointment5->attend = false;
+        $appointment5->place = 'online, Zoom';
+        $subject = Subject::all()->first();
+        $appointment5->subject()->associate($subject);
+        $appointment5->save();
+
+        $appointment6 = new Appointment();
+        $appointment6->date = date("2022-06-02");
+        $appointment6->time = '18:00';
+        $appointment6->duration = '1:00:00';
+        $appointment6->attend = false;
+        $appointment6->place = 'online, Zoom';
+        $subject = Subject::all()->first();
+        $appointment6->subject()->associate($subject);
+        $appointment6->save();
+
+        $appointment4 = new Appointment();
+        $appointment4->date = date("2022-12-22");
         $appointment4->time = '17:00';
         $appointment4->duration = '1:00:00';
         $appointment4->attend = false;

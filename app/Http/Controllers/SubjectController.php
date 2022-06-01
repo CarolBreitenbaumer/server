@@ -24,6 +24,12 @@ class SubjectController extends Controller
         //Helfermethode um in ein Datumsformat umwandeln dass man es in der DB korrekt speichern kann
         $request = $this ->parseRequest( $request );
 
+        /*
+        $request->validate([
+            "time"=>"^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+        ]);
+        */
+
         // wenn ein Teilschritt in der Transaktion nicht funktiert hat wird es wieder zurückgesetzt
         DB:: beginTransaction ();
         try {
@@ -41,6 +47,11 @@ class SubjectController extends Controller
                 }
             }
 
+            // setzen des Datensatzes mit der Methode student() aus dem Model (Beziehung)
+            // associate wird bei einer belongsTo Beziehung verwendet
+            //bei hasMany wird save verwendet
+            //$appointment->student()->associate($appointment);
+
             //mit commit wird transaktion durchgeführt
             DB:: commit ();
             // return a vaild http response - hier passt alles und das neu
@@ -54,6 +65,12 @@ class SubjectController extends Controller
             DB:: rollBack ();
             return response()->json( "das speichern des Faches hat nicht funktioniert: " . $e ->getMessage(), 420 );
         }
+    }
+
+    public function getTutorById(string $id) {
+        $tutor = Subject::where('tutor_id', $id)
+            ->with(['tutor'])->first();
+        return $tutor;
     }
 
     public function delete (string $id): JsonResponse // admin
@@ -83,6 +100,13 @@ class SubjectController extends Controller
     public function checkName(string $name) {
         $subject = Subject::where('name',$name)->first();
         return $subject != null ? response()->json(true,200): response()->json(false,200);
+    }
+
+    public function findByName(string $name) : Subject {
+        $subject = Subject::where('name', $name)
+            ->with(['tutor', 'appointments', 'appointments.student'])
+            ->first();
+        return $subject;
     }
 
     public function update(Request $request, string $id) : JsonResponse
@@ -117,6 +141,8 @@ class SubjectController extends Controller
         }
     }
 
+
+
     // Subject by ID
     public function findSubjectById(string $id) {
         $subject = Subject::where('id', $id)
@@ -124,17 +150,22 @@ class SubjectController extends Controller
         return $subject;
     }
 
-    public function findByName(string $name) : Subject {
-        $subject = Subject::where('name', $name)
-            ->with(['tutor', 'appointments', 'appointments.student'])
-            ->first();
-        return $subject;
+    public function checkInputs(string $date){
+        $subject = Subject::where('date', $date);
+        $date="2012-09-12";
+
+        if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    //erhält alle Subjectnamen
+    //erhält alle Subjectnamen, sortiert nach Name
     public function getSubjects(){ // public
         $subjects = Subject::with(['tutor', 'appointments'])->get();
         return $subjects;
+        //return Subject::orderBy("name")->get();
     }
 
 

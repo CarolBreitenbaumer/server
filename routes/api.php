@@ -30,10 +30,6 @@ Route::get('appointments',[AppointmentController::class,'index']);
 Route::get('subjects/byName/{name}',[SubjectController::class,'findByName']);
 Route::get('subjects/byId/{id}',[SubjectController::class,'findSubjectById']);
 Route::get('subjects',[SubjectController::class,'getSubjects']);
-Route::get('appointments/getBookedAppointmentsPast/{id}',[AppointmentController::class,'getBookedAppointmentsPast']);
-Route::get('appointments/getBookedAppointmentsFuture/{id}',[AppointmentController::class,'getBookedAppointmentsFuture']);
-Route::get('appointments/getBookedAppointmentsPastForStudent/{id}',[AppointmentController::class,'getBookedAppointmentsPastForStudent']);
-Route::get('appointments/getBookedAppointmentsFutureForStudent/{id}',[AppointmentController::class,'getBookedAppointmentsFutureForStudent']);
 Route::get('appointments/{id}',[AppointmentController::class,'findAppointmentById']);
 Route::get('subjects/search/{searchTerm}',[Controller::class,'findBySearchTerm']);
 
@@ -43,8 +39,10 @@ Route::get('subjects/search/{searchTerm}',[Controller::class,'findBySearchTerm']
 Route::group(['middleware' => ['api','auth.jwt']], function(){
     Route::post('auth/logout', [AuthController::class,'logout']);
     Route::post('user/registerAppointment/{appointmentId}/{studentId}',[AppointmentController::class,'registerUserAppointment']);
-    Route::get('messages/forStudent/{studentId}',[MessageController::class,'getMessagesForStudent']);
     Route::post('messages',[MessageController::class,'save']);
+    Route::get('appointments/getBookedAppointmentsPastForStudent/{id}',[AppointmentController::class,'getBookedAppointmentsPastForStudent']);
+    Route::get('appointments/getBookedAppointmentsFutureForStudent/{id}',[AppointmentController::class,'getBookedAppointmentsFutureForStudent']);
+
 });
 
 
@@ -58,6 +56,8 @@ Route::group(['middleware' => ['api','auth.jwt', 'auth.admin']], function(){
     Route::get('messages/forTutor/{tutorId}',[MessageController::class,'getMessagesForTutor']);
     Route::post('messages/readMessage/{id}',[MessageController::class,'setMessageReaded']);
     Route::get('subjects/checkName/{id}',[SubjectController::class,'checkName']);
+    Route::get('appointments/getBookedAppointmentsPast/{id}',[AppointmentController::class,'getBookedAppointmentsPast']);
+    Route::get('appointments/getBookedAppointmentsFuture/{id}',[AppointmentController::class,'getBookedAppointmentsFuture']);
 
 });
 

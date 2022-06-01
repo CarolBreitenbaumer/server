@@ -11,7 +11,7 @@ class Tutor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'firstname,', 'lastname', 'description', 'education', 'tnumber', 'pricePerHour', 'priceForTenHours', 'users_id'];
+    protected $fillable = ['image', 'firstname,', 'lastname', 'description', 'education', 'tnumber', 'pricePerHour', 'priceForTenHours', 'comment', 'users_id'];
 
     /**
      * tutor has many subjects

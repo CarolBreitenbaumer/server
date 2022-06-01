@@ -24,14 +24,12 @@ class SubjectsTableSeeder extends Seeder
                     Quelle: <a>https://www.ibm.com/docs/de/i/7.4?topic=serving-programming</a>";
         $subject1->name = "Clientseitige Programmierung";
 
-
         $subject2 = new Subject();
         $subject2->description = "Der „große Sinn von CSS“ besteht in der Trennung von Inhalt und Design. Das hört man oft, stellt sich nichts drunter vor und bastelt dann doch eine besondere Überschrift mit einem inline-style, einen neuen div-Container mit einer ganz speziellen ID oder Klasse, die später nirgends wieder auftaucht. Das funktioniert auch mehr oder weniger – man wird ohne viel Mühe eine statische Seite zusammenstellen, die ihren Zweck erfüllt – und vergisst das ganze.
                     Es ist aber beinahe unmöglich, einen so über die Zeit gewucherten Internetauftritt umzugestalten – man müsste dutzende oder mehr Einzeldateien umschreiben und im Gewusel der Klassen und Elemente wird man sich schnell verlieren. Letztlich dauert die Änderung beinahe länger als eine Neuerstellung.
                     Und genau darin liegt die Stärke von CSS: uneingeschränkte Flexibilität, wenn z. B. das Layout nicht mehr zeitgemäß ist oder neue Strukturen, vor allem bei dynamischen Seiten, Änderungen erfordern. Dabei wäre man ohne CSS buchstäblich „verloren im Quelltext“.
                     <a>https://wiki.selfhtml.org/wiki/CSS/Tutorials/Einstieg/Stylesheets_einbinden</a>";
         $subject2->name = "CSS";
-
 
         //wegen Belongs To Beziehung
         //speichern Tutor zu Fach
@@ -42,6 +40,31 @@ class SubjectsTableSeeder extends Seeder
         $subject2->tutor()->associate($tutor);
         $subject2->save();
 
+        $subject3 = new Subject();
+        $subject3->description = "Es wird speziell auf die Themen Gramatik, Rechtschreibung und Beistrichsetzung eingegangen. Weitere Themen biete ich gerne auf Anfrage an.";
+        $subject3->name = "Deutsch";
+
+        $subject4 = new Subject();
+        $subject4->description = "Es wird spielziell auf Themen wie Einführung in die Differentialrechnung, Ausbau der Differentialrechnung, Einführung in die Integralrechnung und Wahrscheinlichkeitsrechnung eingegeangen.";
+        $subject4->name = "Mathematik";
+
+        /*
+        $subject3->tutor()->associate(Tutor::all()->skip(2)->first());
+        $subject3->save();
+
+        $subject4->tutor()->associate(Tutor::all()->skip(2)->first());
+        $subject4->save();
+
+        */
+
+        $tutor = Tutor::all()->first();
+        $subject3->tutor()->associate($tutor);
+        $subject3->save();
+
+
+        $tutor = Tutor::all()->first();
+        $subject4->tutor()->associate($tutor);
+        $subject4->save();
 
 
     }
